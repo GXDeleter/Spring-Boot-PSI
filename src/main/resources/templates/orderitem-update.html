@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<title>訂單資料維護</title>
+</head>
+<body>
+	<div class="container my-2">
+		<!-- Header -->
+		<div th:include="header::header"></div>
+		
+		<!-- Content -->
+		<h1 th:text="${iid} >0 ? 修改明細 : 新增明細"></h1>
+		<form th:action="@{/order/{oid}/update/item/{iid}(oid=*{order.id}, iid=${iid})}" th:object="${orderItem}" method="post">
+			<div class="form-group">
+				<label for="order.id">訂單序號:</label> 
+				<input type="text" th:field="*{order.id}" class="form-control" readonly="readonly">
+			</div>
+			<div class="form-group">
+				<label for="order.id">顧客名稱:</label> 
+				<input type="text" th:field="*{order.customer.name}" class="form-control" readonly="readonly">
+			</div>
+			<div class="form-group">
+				<label for="product.id">商品:</label> 
+				<select class="form-control select2" th:field="*{product.id}" id="product.id">
+					<option th:each="p:${products}" th:value="${p.id}" th:text="${p.name}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="amount">數量:</label> 
+				<input type="text" th:field="*{amount}" id="amount" placeholder="amount" class="form-control">
+			</div>
+			<div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+    			<p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>    
+			</div>
+			<input type="submit" th:value="(${iid} >0 ? '修改訂單項目' : '新增訂單項目')"  class="btn btn-primary">
+			<a th:href="@{/order/{oid}/view/item (oid=*{order.id})}" class="btn btn-danger">取消</a>
+		</form>
+		
+		<!-- footer -->
+		<div th:include="footer::footer"></div>
+		
+	</div>
+</body>
+</html>

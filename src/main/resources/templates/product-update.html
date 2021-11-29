@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<title>商品資料維護</title>
+</head>
+<body>
+	<div class="container my-2">
+		<!-- Header -->
+		<div th:include="header::header"></div>
+		
+		<!-- Content -->
+		<form th:action="@{/product/update/{id}(id=${id})}" th:object="${product}" method="post">
+			<h1>商品資料</h1>
+			<div class="form-group">
+				<label for="name">商品名稱：</label>
+				<input type="text" th:field="*{name}" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="name">成本(TWD)：</label>
+				<input type="text" th:field="*{cost}" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="name">定價(TWD)：</label>
+				<input type="text" th:field="*{price}" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="name">單位：</label>
+				<input type="text" th:field="*{unit}" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="name">最小訂購數量(單位)：</label>
+				<input type="text" th:field="*{min}" class="form-control" />
+			</div>
+			<div class="form-group">
+				<label for="name">商品描述：</label>
+				<input type="text" th:field="*{discribe}" class="form-control" />
+			</div>
+			<input type="submit" value="新增 / 修改" class="btn btn-primary">
+			<a th:href="@{/product/}" class="btn btn-danger">取消</a>
+		</form>
+		
+		<!-- footer -->
+		<div th:include="footer::footer"></div>
+		
+	</div>
+</body>
+</html>

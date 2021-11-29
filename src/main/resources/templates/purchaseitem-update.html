@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<title>採購單資料維護</title>
+</head>
+<body>
+	<div class="container my-2">
+		<!-- Header -->
+		<div th:include="header::header"></div>
+		
+		<!-- Content -->
+		<h1 th:text="${iid} != 0 ? 修改明細 : 新增明細"></h1>
+		<form th:action="@{/purchase/{pid}/update/item/{iid}(pid=*{purchase.id}, iid=${iid})}" th:object="${purchaseitem}" method="post">
+			<div class="form-group">
+				<label for="purchase.id">採購單序號:</label> 
+				<input type="text" th:field="*{purchase.id}" class="form-control" readonly="readonly">
+			</div>
+			<div class="form-group">
+				<label for="product.id">商品:</label> 
+				<select class="form-control select2" th:field="*{product.id}" id="product.id">
+					<option th:each="p:${products}" th:value="${p.id}" th:text="${p.name}"></option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="amount">數量:</label> 
+				<input type="text" th:field="*{amount}" id="amount" placeholder="amount" class="form-control">
+			</div>
+			<input type="submit" th:value="(${iid} >0 ? '修改訂單項目' : '新增訂單項目')"  class="btn btn-primary">
+			<a th:href="@{/purchase/{pid}/view/item (pid=*{purchase.id})}" class="btn btn-danger">取消</a>
+		</form>
+		
+		<!-- footer -->
+		<div th:include="footer::footer"></div>
+		
+	</div>
+</body>
+</html>

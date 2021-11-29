@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thmeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<title>商品採購/訂單明細</title>
+</head>
+<body>
+	<div class="container my-2">
+		<!-- Header -->
+		<div th:include="header::header"></div>
+		
+		<!-- Content -->
+		<div th:if="${purchaseItems} != null" class="form-group">
+			<h1>商品採購明細</h1>
+			<table border="1" class="table table-striped table-responsive-md">
+				<thead>
+					<tr>
+						<th>商品 ID</th>
+						<th>商品名稱</th>
+						<th>採購單序號</th>
+						<th>採購日期</th>
+						<th>供應商名稱</th>
+						<th>採購數量</th>
+						<th>經手人員</th>
+					</tr>
+				</thead>
+				<tbody th:each="item:${purchaseItems}">
+					<tr>
+						<td th:text="${item.product.id}">商品 ID</td>
+						<td th:text="${item.product.name}">商品名稱</td>
+						<td>
+							<a th:text="${item.purchase.id}" th:href="@{/purchase/{pid}/view/item (pid=${item.purchase.id})}">採購單序號</a>
+						</td>
+						<td th:text="${item.purchase.date}">採購日期</td>
+						<td th:text="${item.purchase.supplier.name}">供應商名稱</td>
+						<td th:text="${item.amount}">採購數量</td>
+						<td th:text="${item.purchase.employee.name}">經手人員</td>
+					</tr>
+				</tbody>		
+			</table>
+		</div>
+		<div th:if="${orderItems} != null" class="form-group">
+			<h1>商品訂單明細</h1>
+			<table border="1" class="table table-striped table-responsive-md">
+				<thead>
+					<tr>
+						<th>商品 ID</th>
+						<th>商品名稱</th>
+						<th>訂單序號</th>
+						<th>訂購日期</th>
+						<th>客戶名稱</th>
+						<th>訂購數量</th>
+						<th>經手人員</th>
+					</tr>
+				</thead>
+				<tbody th:each="item:${orderItems}">
+					<tr>
+						<td th:text="${item.product.id}">商品 ID</td>
+						<td th:text="${item.product.name}">商品名稱</td>
+						<td>
+							<a th:text="${item.order.id}" th:href="@{/order/{pid}/view/item (pid=${item.order.id})}">訂單序號</a>
+						</td>
+						<td th:text="${item.order.date}">訂購日期</td>
+						<td th:text="${item.order.customer.name}">客戶名稱</td>
+						<td th:text="${item.amount}">訂購數量</td>
+						<td th:text="${item.order.employee.name}">經手人員</td>
+					</tr>
+				</tbody>		
+			</table>
+		</div>
+
+		<!-- footer -->
+		<div th:include="footer::footer"></div>
+		
+	</div>
+</body>
+</html>
