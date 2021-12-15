@@ -68,7 +68,13 @@ public class OrderController {
 	@RequestMapping("/edit/{id}")
 	public String edit(Model model, @PathVariable("id") Long id, Order order) {
 		List<Customer> customers = customerRepository.findAll();
-		List<Employee> employees = employeeRepository.findAll();
+		
+		// 不限定業務部的員工
+		// List<Employee> employees = employeeRepository.findAll();
+		
+		// 限定業務部的員工
+		Department department = departmentRepository.findByName("業務部").get(0);
+		List<Employee> employees = employeeRepository.findByDepartment(department);
 		
 		// 若有指定訂單，找出該筆訂單資料
 		if(id != 0) {
