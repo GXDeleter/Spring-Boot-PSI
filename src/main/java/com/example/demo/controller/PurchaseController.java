@@ -52,7 +52,13 @@ public class PurchaseController {
 	public String update(Model model, @PathVariable("id") Long id) {
 		Purchase purchase = new Purchase();
 		List<Supplier> suppliers = supplierRepository.findAll();
-		List<Employee> employees = employeeRepository.findAll();
+		
+		// 不限定採購部的員工
+		// List<Employee> employees = employeeRepository.findAll();
+		
+		// 限定業務部的員工
+		Department department = departmentRepository.findByName("採購部").get(0);
+		List<Employee> employees = employeeRepository.findByDepartment(department);
 		
 		// 若有指定 purchase id ，找出該筆資料
 		if(id > 0) {
@@ -73,7 +79,7 @@ public class PurchaseController {
 		if(result.hasErrors()) {
 			model.addAttribute("purchase", purchase);
 			model.addAttribute("suppliers", supplierRepository.findAll());
-			model.addAttribute("employees", employeeRepository.findByDepartment(departmentRepository.findById(1L).get()));
+			model.addAttribute("employees", employeeRepository.findByDepartment(departmentRepository.findByName("採購部").get(0)));
 			model.addAttribute("id", id);
 			return "purchase-update";
 		}else {
